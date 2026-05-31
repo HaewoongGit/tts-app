@@ -399,7 +399,7 @@ export default function AudioPlayer() {
             재생할 오디오가 없습니다. 목록에서 선택하거나 위 입력창에서 음성을 새로 생성해 보세요.
           </p>
         ) : (
-          <p className="text-base sm:text-lg font-semibold leading-relaxed text-center select-none max-w-xl mx-auto py-2">
+          <p className="text-base sm:text-lg font-semibold leading-relaxed text-left select-none max-w-xl mx-auto py-2">
             {words.map((word, idx) => {
               if (word.isNewline) {
                 return <br key={idx} />;
