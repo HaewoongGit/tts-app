@@ -272,7 +272,7 @@ export default function AudioPlayer() {
   };
 
   return (
-    <div className="w-full flex-1 flex flex-col justify-between rounded-none sm:rounded-2xl border-0 sm:border border-slate-700/80 bg-slate-900/60 p-4 sm:p-6 backdrop-blur-md shadow-2xl relative overflow-hidden min-h-[440px] group">
+    <div className="w-full flex-1 flex flex-col justify-between rounded-none sm:rounded-2xl border-0 sm:border border-slate-700/80 bg-slate-900/60 p-4 sm:p-5 backdrop-blur-md shadow-2xl relative overflow-hidden min-h-[460px] group">
       {/* Subtle border glow on hover */}
       <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-indigo-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
@@ -286,7 +286,7 @@ export default function AudioPlayer() {
       />
 
       {/* 1. Player Header */}
-      <div className="relative z-10 flex items-center justify-between pb-4 border-b border-slate-700/60">
+      <div className="relative z-10 flex items-center justify-between pb-3 border-b border-slate-700/60">
         <label className="text-xs font-bold tracking-wider text-slate-300 uppercase">
           Player & Subtitle Highlight
         </label>
@@ -309,8 +309,8 @@ export default function AudioPlayer() {
         )}
       </div>
 
-      {/* 2. Interactive Text Highlight Area */}
-      <div className="relative z-10 flex-1 my-4 sm:my-6 flex p-4 sm:p-6 rounded-xl bg-slate-950/50 border border-slate-700/60 min-h-[200px] max-h-[300px] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent">
+      {/* 2. Interactive Text Highlight Area (대폭 넓혀진 핵심 자막 표시부) */}
+      <div className="relative z-10 flex-1 my-2 sm:my-3.5 flex p-3 sm:p-4 rounded-xl bg-slate-950/50 border border-slate-700/60 min-h-[220px] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent">
         {!activeTrack ? (
           <p className="text-xs sm:text-sm text-slate-300 font-normal leading-relaxed text-center select-none max-w-xs sm:max-w-md m-auto">
             재생할 오디오가 없습니다. 목록에서 선택하거나 위 입력창에서 음성을 새로 생성해 보세요.
@@ -329,8 +329,8 @@ export default function AudioPlayer() {
                   <span
                     className={`transition-all duration-150 ${
                       isHighlighted
-                        ? 'text-indigo-300 drop-shadow-[0_0_10px_rgba(129,140,248,0.9)]'
-                        : 'text-slate-400/50'
+                        ? 'text-cyan-300 drop-shadow-[0_0_12px_rgba(34,211,238,0.95)]'
+                        : 'text-slate-300/80'
                     }`}
                   >
                     {word.text}
@@ -344,8 +344,60 @@ export default function AudioPlayer() {
         )}
       </div>
 
-      {/* 3. Audio Progress Bar */}
-      <div className="relative z-10 w-full mb-6">
+      {/* 3. Playback Controls (버튼 크기 및 여백 콤팩트화로 텍스트 공간 극대화) */}
+      <div className="relative z-10 flex flex-col items-center gap-3 mb-3">
+        <div className="flex items-center gap-5">
+          {/* Previous Sentence Button */}
+          <button
+            type="button"
+            onClick={handlePrevSentence}
+            disabled={!hasPrevSentence}
+            className="p-2.5 rounded-full border border-slate-700 bg-slate-950/60 text-slate-200 hover:border-indigo-500/50 hover:text-indigo-200 hover:bg-slate-900/80 active:scale-95 transition-all cursor-pointer shadow-md disabled:opacity-30 disabled:cursor-not-allowed"
+            title="이전 문장"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          {/* Play/Pause Button */}
+          <button
+            type="button"
+            onClick={handlePlayPause}
+            disabled={!activeTrack}
+            className="p-4 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 hover:from-indigo-400 hover:to-purple-400 hover:shadow-lg hover:shadow-indigo-500/25 text-white active:scale-95 transition-all shadow-xl cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            title={isPlaying ? '일시정지' : '재생'}
+          >
+            {isPlaying ? (
+              /* Pause Icon (SVG) */
+              <svg className="w-5.5 h-5.5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+              </svg>
+            ) : (
+              /* Play Icon (SVG) */
+              <svg className="w-5.5 h-5.5 translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            )}
+          </button>
+
+          {/* Next Sentence Button */}
+          <button
+            type="button"
+            onClick={handleNextSentence}
+            disabled={!hasNextSentence}
+            className="p-2.5 rounded-full border border-slate-700 bg-slate-950/60 text-slate-200 hover:border-indigo-500/50 hover:text-indigo-200 hover:bg-slate-900/80 active:scale-95 transition-all cursor-pointer shadow-md disabled:opacity-30 disabled:cursor-not-allowed"
+            title="다음 문장"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      {/* 4. Audio Progress Bar (맨 하단 밀착) */}
+      <div className="relative z-10 w-full mb-1">
         <div 
           ref={progressBarRef}
           onClick={handleProgressClick}
@@ -360,58 +412,6 @@ export default function AudioPlayer() {
         <div className="mt-2 flex justify-between text-[10px] text-slate-300 font-mono font-medium">
           <span>{formatTime(currentTime)}</span>
           <span>{formatTime(duration)}</span>
-        </div>
-      </div>
-
-      {/* 4. Playback Controls */}
-      <div className="relative z-10 flex flex-col items-center gap-4">
-        <div className="flex items-center gap-6">
-          {/* Previous Sentence Button */}
-          <button
-            type="button"
-            onClick={handlePrevSentence}
-            disabled={!hasPrevSentence}
-            className="p-3 rounded-full border border-slate-700 bg-slate-950/60 text-slate-200 hover:border-indigo-500/50 hover:text-indigo-200 hover:bg-slate-900/80 active:scale-95 transition-all cursor-pointer shadow-md disabled:opacity-30 disabled:cursor-not-allowed"
-            title="이전 문장"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-
-          {/* Play/Pause Button */}
-          <button
-            type="button"
-            onClick={handlePlayPause}
-            disabled={!activeTrack}
-            className="p-5 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 hover:from-indigo-400 hover:to-purple-400 hover:shadow-lg hover:shadow-indigo-500/25 text-white active:scale-95 transition-all shadow-xl cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-            title={isPlaying ? '일시정지' : '재생'}
-          >
-            {isPlaying ? (
-              /* Pause Icon (SVG) */
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-              </svg>
-            ) : (
-              /* Play Icon (SVG) */
-              <svg className="w-6 h-6 translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            )}
-          </button>
-
-          {/* Next Sentence Button */}
-          <button
-            type="button"
-            onClick={handleNextSentence}
-            disabled={!hasNextSentence}
-            className="p-3 rounded-full border border-slate-700 bg-slate-950/60 text-slate-200 hover:border-indigo-500/50 hover:text-indigo-200 hover:bg-slate-900/80 active:scale-95 transition-all cursor-pointer shadow-md disabled:opacity-30 disabled:cursor-not-allowed"
-            title="다음 문장"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
         </div>
       </div>
     </div>
