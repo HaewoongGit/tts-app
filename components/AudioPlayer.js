@@ -361,7 +361,7 @@ export default function AudioPlayer() {
 
       {/* 2. Interactive Text Highlight Area (대폭 넓혀진 핵심 자막 표시부) */}
       <div 
-        className={`relative z-10 my-2 sm:my-3.5 p-3 sm:p-4 rounded-xl bg-slate-950/50 border border-slate-700/60 h-[240px] sm:h-[280px] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent ${
+        className={`relative z-10 flex-1 my-2 sm:my-3.5 p-3 sm:p-4 rounded-xl bg-slate-950/50 border border-slate-700/60 min-h-[220px] max-h-[340px] sm:max-h-[440px] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent ${
           !activeTrack ? 'flex items-center justify-center' : 'block'
         }`}
       >
