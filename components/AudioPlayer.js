@@ -316,7 +316,7 @@ export default function AudioPlayer() {
             재생할 오디오가 없습니다. 목록에서 선택하거나 위 입력창에서 음성을 새로 생성해 보세요.
           </p>
         ) : (
-          <p className="text-base sm:text-lg font-normal text-slate-300 leading-relaxed text-center select-none max-w-lg m-auto">
+          <p className="text-base sm:text-lg font-semibold leading-relaxed text-center select-none max-w-xl m-auto">
             {words.map((word, idx) => {
               // 실시간 오디오 재생 시간에 맞춰 해당 단어를 하이라이팅
               const isHighlighted = 
@@ -329,8 +329,8 @@ export default function AudioPlayer() {
                   <span
                     className={`transition-all duration-150 ${
                       isHighlighted
-                        ? 'text-indigo-300 font-extrabold drop-shadow-[0_0_8px_rgba(129,140,248,0.7)]'
-                        : 'text-slate-300/80 font-normal'
+                        ? 'text-indigo-300 drop-shadow-[0_0_10px_rgba(129,140,248,0.9)]'
+                        : 'text-slate-400/50'
                     }`}
                   >
                     {word.text}
