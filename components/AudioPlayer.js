@@ -90,7 +90,7 @@ export default function AudioPlayer() {
   };
 
 
-  // ElevenLabs의 캐릭터 단위 타임스탬프를 단어 단위 타임스탬프로 결합
+  // ElevenLabs의 캐릭터 단위 타임스탬프를 단어 단위 타임스탬프로 결합 (줄바꿈 및 빈 줄 보존)
   const words = useMemo(() => {
     if (!activeTrack) return [];
     
@@ -98,8 +98,30 @@ export default function AudioPlayer() {
     const alignment = activeTrack.alignment;
     
     if (!alignment || !alignment.characters) {
-      // 타임스탬프 정보가 없을 경우 공백 기준 단어 분할 처리 (일반 텍스트만 노출)
-      return text.split(' ').map((word) => ({ text: word, start: -1, end: -1 }));
+      // 타임스탬프 정보가 없을 경우 줄바꿈(\n)을 포함하여 단어 분할 처리
+      const result = [];
+      let currentWord = '';
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        if (char === '\n') {
+          if (currentWord) {
+            result.push({ text: currentWord, start: -1, end: -1 });
+            currentWord = '';
+          }
+          result.push({ text: '\n', isNewline: true, start: -1, end: -1 });
+        } else if (char === ' ' || char === '\t') {
+          if (currentWord) {
+            result.push({ text: currentWord, start: -1, end: -1 });
+            currentWord = '';
+          }
+        } else {
+          currentWord += char;
+        }
+      }
+      if (currentWord) {
+        result.push({ text: currentWord, start: -1, end: -1 });
+      }
+      return result;
     }
 
     const { characters, character_start_times_seconds, character_end_times_seconds } = alignment;
@@ -113,8 +135,15 @@ export default function AudioPlayer() {
       const start = character_start_times_seconds[i];
       const end = character_end_times_seconds[i];
 
-      // 공백 문자 확인 시 단어로 패킹
-      if (char === ' ' || char === '\n' || char === '\t') {
+      if (char === '\n') {
+        if (currentWord) {
+          result.push({ text: currentWord, start: wordStart, end: wordEnd });
+          currentWord = '';
+          wordStart = null;
+          wordEnd = null;
+        }
+        result.push({ text: '\n', isNewline: true, start: -1, end: -1 });
+      } else if (char === ' ' || char === '\t') {
         if (currentWord) {
           result.push({ text: currentWord, start: wordStart, end: wordEnd });
           currentWord = '';
@@ -372,6 +401,10 @@ export default function AudioPlayer() {
         ) : (
           <p className="text-base sm:text-lg font-semibold leading-relaxed text-center select-none max-w-xl mx-auto py-2">
             {words.map((word, idx) => {
+              if (word.isNewline) {
+                return <br key={idx} />;
+              }
+
               // 실시간 오디오 재생 시간에 맞춰 해당 단어를 하이라이팅
               const isHighlighted = 
                 word.start !== -1 && 
@@ -389,8 +422,8 @@ export default function AudioPlayer() {
                   >
                     {word.text}
                   </span>
-                  {/* 단어 사이에 자연스러운 띄어쓰기 공백 추가 */}
-                  {' '}
+                  {/* 단어 사이에 자연스러운 띄어쓰기 공백 추가. 단, 다음 단어가 줄바꿈이 아닐 때만 띄어쓰기 */}
+                  {words[idx + 1] && !words[idx + 1].isNewline && ' '}
                 </span>
               );
             })}
