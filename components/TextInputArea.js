@@ -62,7 +62,7 @@ export default function TextInputArea() {
   };
 
   return (
-    <div className="w-full rounded-2xl border border-slate-700/80 bg-slate-900/60 p-6 backdrop-blur-md shadow-2xl relative overflow-hidden group">
+    <div className="w-full rounded-none sm:rounded-2xl border-0 sm:border border-slate-700/80 bg-slate-900/60 p-4 sm:p-6 backdrop-blur-md shadow-2xl relative overflow-hidden group">
       {/* Subtle border glow on hover */}
       <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 

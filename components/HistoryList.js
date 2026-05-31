@@ -111,7 +111,7 @@ export default function HistoryList() {
   }, []);
 
   return (
-    <div className="w-full flex-1 flex flex-col rounded-2xl border border-slate-700/80 bg-slate-900/60 p-6 backdrop-blur-md shadow-2xl relative overflow-hidden min-h-[280px]">
+    <div className="w-full flex-1 flex flex-col rounded-none sm:rounded-2xl border-0 sm:border border-slate-700/80 bg-slate-900/60 p-4 sm:p-6 backdrop-blur-md shadow-2xl relative overflow-hidden min-h-[280px]">
       
       {/* Title & Count */}
       <div className="relative z-10 mb-4 flex items-center justify-between">

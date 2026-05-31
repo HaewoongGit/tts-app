@@ -272,7 +272,7 @@ export default function AudioPlayer() {
   };
 
   return (
-    <div className="w-full flex-1 flex flex-col justify-between rounded-2xl border border-slate-700/80 bg-slate-900/60 p-6 backdrop-blur-md shadow-2xl relative overflow-hidden min-h-[440px] group">
+    <div className="w-full flex-1 flex flex-col justify-between rounded-none sm:rounded-2xl border-0 sm:border border-slate-700/80 bg-slate-900/60 p-4 sm:p-6 backdrop-blur-md shadow-2xl relative overflow-hidden min-h-[440px] group">
       {/* Subtle border glow on hover */}
       <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-indigo-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
@@ -310,7 +310,7 @@ export default function AudioPlayer() {
       </div>
 
       {/* 2. Interactive Text Highlight Area */}
-      <div className="relative z-10 flex-1 my-6 flex p-6 rounded-xl bg-slate-950/50 border border-slate-700/60 min-h-[200px] max-h-[300px] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent">
+      <div className="relative z-10 flex-1 my-4 sm:my-6 flex p-4 sm:p-6 rounded-xl bg-slate-950/50 border border-slate-700/60 min-h-[200px] max-h-[300px] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent">
         {!activeTrack ? (
           <p className="text-xs sm:text-sm text-slate-300 font-normal leading-relaxed text-center select-none max-w-xs sm:max-w-md m-auto">
             재생할 오디오가 없습니다. 목록에서 선택하거나 위 입력창에서 음성을 새로 생성해 보세요.
