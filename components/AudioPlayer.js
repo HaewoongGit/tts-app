@@ -360,13 +360,17 @@ export default function AudioPlayer() {
       </div>
 
       {/* 2. Interactive Text Highlight Area (대폭 넓혀진 핵심 자막 표시부) */}
-      <div className="relative z-10 flex-1 my-2 sm:my-3.5 flex p-3 sm:p-4 rounded-xl bg-slate-950/50 border border-slate-700/60 min-h-[220px] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent">
+      <div 
+        className={`relative z-10 my-2 sm:my-3.5 p-3 sm:p-4 rounded-xl bg-slate-950/50 border border-slate-700/60 h-[240px] sm:h-[280px] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent ${
+          !activeTrack ? 'flex items-center justify-center' : 'block'
+        }`}
+      >
         {!activeTrack ? (
-          <p className="text-xs sm:text-sm text-slate-300 font-normal leading-relaxed text-center select-none max-w-xs sm:max-w-md m-auto">
+          <p className="text-xs sm:text-sm text-slate-300 font-normal leading-relaxed text-center select-none max-w-xs sm:max-w-md">
             재생할 오디오가 없습니다. 목록에서 선택하거나 위 입력창에서 음성을 새로 생성해 보세요.
           </p>
         ) : (
-          <p className="text-base sm:text-lg font-semibold leading-relaxed text-center select-none max-w-xl m-auto">
+          <p className="text-base sm:text-lg font-semibold leading-relaxed text-center select-none max-w-xl mx-auto py-2">
             {words.map((word, idx) => {
               // 실시간 오디오 재생 시간에 맞춰 해당 단어를 하이라이팅
               const isHighlighted = 
