@@ -109,7 +109,7 @@ export default function TextInputArea() {
         <label className="text-xs font-bold tracking-wider text-slate-300 uppercase">
           Text Input
         </label>
-        <span className="text-xs text-slate-400 font-mono font-medium">{text.length} / 1000</span>
+        <span className="text-xs text-slate-400 font-mono font-medium">{text.length} / 5000</span>
       </div>
 
       {/* Input Textarea */}
@@ -120,7 +120,7 @@ export default function TextInputArea() {
           disabled={isLoading}
           className="w-full min-h-[140px] resize-y rounded-xl border border-slate-700 bg-slate-950/60 p-4 text-sm text-slate-100 placeholder-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all font-normal leading-relaxed disabled:opacity-50"
           placeholder="여기에 영어 또는 한국어 문장을 입력해 주세요. ElevenLabs의 고품질 인공지능 음성으로 변환됩니다..."
-          maxLength={1000}
+          maxLength={5000}
         />
       </div>
 
