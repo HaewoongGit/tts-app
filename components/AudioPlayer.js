@@ -311,9 +311,35 @@ export default function AudioPlayer() {
 
       {/* 1. Player Header */}
       <div className="relative z-10 flex items-center justify-between pb-3 border-b border-slate-700/60">
-        <label className="text-xs font-bold tracking-wider text-slate-300 uppercase">
-          Player & Subtitle Highlight
-        </label>
+        <div className="flex items-center gap-3">
+          <label className="text-xs font-bold tracking-wider text-slate-300 uppercase">
+            Player & Subtitle Highlight
+          </label>
+          {activeTrack && (
+            <button
+              type="button"
+              onClick={handleCopyActiveText}
+              className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded bg-slate-800/80 hover:bg-slate-700 text-[10px] font-semibold text-slate-300 hover:text-white border border-slate-700/60 transition-all duration-150 cursor-pointer active:scale-95 shadow-sm"
+              title="자막 전체 복사"
+            >
+              {activeCopied ? (
+                <>
+                  <svg className="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span className="text-emerald-350">복사 완료!</span>
+                </>
+              ) : (
+                <>
+                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                  </svg>
+                  <span>전체 복사</span>
+                </>
+              )}
+            </button>
+          )}
+        </div>
         
         {!activeTrack ? (
           <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-slate-500/20 text-slate-200 border border-slate-500/40">
@@ -335,36 +361,12 @@ export default function AudioPlayer() {
 
       {/* 2. Interactive Text Highlight Area (대폭 넓혀진 핵심 자막 표시부) */}
       <div className="relative z-10 flex-1 my-2 sm:my-3.5 flex p-3 sm:p-4 rounded-xl bg-slate-950/50 border border-slate-700/60 min-h-[220px] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent">
-        {activeTrack && (
-          <button
-            type="button"
-            onClick={handleCopyActiveText}
-            className="absolute top-2 right-2 z-20 sm:top-3 sm:right-3 inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-slate-800/80 hover:bg-slate-700 text-[10px] font-semibold text-slate-300 hover:text-white border border-slate-700 transition-all duration-150 cursor-pointer active:scale-95 shadow-sm"
-            title="자막 전체 복사"
-          >
-            {activeCopied ? (
-              <>
-                <svg className="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-                <span className="text-emerald-350">복사 완료!</span>
-              </>
-            ) : (
-              <>
-                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
-                </svg>
-                <span>전체 복사</span>
-              </>
-            )}
-          </button>
-        )}
         {!activeTrack ? (
           <p className="text-xs sm:text-sm text-slate-300 font-normal leading-relaxed text-center select-none max-w-xs sm:max-w-md m-auto">
             재생할 오디오가 없습니다. 목록에서 선택하거나 위 입력창에서 음성을 새로 생성해 보세요.
           </p>
         ) : (
-          <p className="text-base sm:text-lg font-semibold leading-relaxed text-center select-none max-w-xl m-auto pr-8 sm:pr-10">
+          <p className="text-base sm:text-lg font-semibold leading-relaxed text-center select-none max-w-xl m-auto">
             {words.map((word, idx) => {
               // 실시간 오디오 재생 시간에 맞춰 해당 단어를 하이라이팅
               const isHighlighted = 
