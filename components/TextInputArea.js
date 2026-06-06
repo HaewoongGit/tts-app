@@ -92,14 +92,10 @@ export default function TextInputArea() {
         <input
           type="text"
           value={title}
-          onChange={(e) => {
-            // 영문 대소문자, 숫자, 공백(\s)을 제외한 모든 문자를 빈 문자열로 치환하여 필터링
-            const filteredValue = e.target.value.replace(/[^a-zA-Z0-9\s]/g, '');
-            setTitle(filteredValue);
-          }}
+          onChange={(e) => setTitle(e.target.value)}
           disabled={isLoading}
           className="w-full rounded-xl border border-slate-700 bg-slate-950/60 p-3 text-sm text-slate-100 placeholder-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all font-normal"
-          placeholder="Enter title (English and numbers only)"
+          placeholder="음성 파일 제목을 입력해 주세요"
           maxLength={50}
         />
       </div>
